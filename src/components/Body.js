@@ -1,19 +1,26 @@
 // Essentials
-import React from "react";
+import React, { Component } from "react";
 
 // Modules
 import Mines from "../modules/Mines";
 
-var Page = new Mines();
-Page.createOre(3);
+class Body extends Component {
+    constructor(props) {
+        super(props)
 
-function Body() {
-    return (
-        <div id="contentZone">
-            <div id="contentBackground"></div>
-            {Page.getPageReactComponents}
-        </div>
-    )
+        this.state = {
+            pagina: <Mines />
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <div id="contentBackground"></div>
+                {this.state.pagina}
+            </div>
+        )
+    }
 }
 
 export default Body;

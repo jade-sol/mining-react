@@ -4,6 +4,14 @@ function changePage(page) {
 
 }
 
+function save() {
+
+}
+
+function load() {
+    
+}
+
 function Header() {
     return (
         <header>
@@ -13,6 +21,8 @@ function Header() {
                     <li><button onClick={changePage(2)}>Forest</button></li>
                     <li><button onClick={changePage(3)}>Smith</button></li>
                     <li><button onClick={changePage(4)}>Build</button></li>
+                    <li><button onClick={save()}>Save</button></li>
+                    <li><button onClick={load()}>Load</button></li>
                 </ul>
             </nav>
         </header>

@@ -1,44 +1,71 @@
+// Essentials
+import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 // Modules
-import OresArray from "./FakeDatabase";
-import OreClass from "./OreClass";
+import resourcesDictionary from "./ResourcesDictionary";
+import Ore from "./Ore";
 
-// Components
-import SceneObject from "../components/SceneObject";
+class Mines extends React.Component {
+    constructor(props) {
+        super(props);
 
-class Mines {
-    constructor() {
-        this.pageObjects = [];
-        this.pageReactComponents = [];
-    }
+        this.state = {
+            activeOres: []
+        }
 
-    get getPageObjects() {
-        return this.pageObjects; 
-    }
-
-    get getPageReactComponents() {
-        return this.pageReactComponents;
+        this.createOre(10);
     }
 
     createOre(quantity) {
         let i;
         let luck;
-    
+        let ore;
+
         for (i=0;i<quantity;i++) {
-            luck = Math.floor(Math.random() * 6);
-            this.pageObjects.push(new OreClass(
-                OresArray[luck].name, 
-                OresArray[luck].hardness,
-                OresArray[luck].img
-                )
-            );
-            this.pageObjects[i].setReactComponent(
-                <SceneObject img={this.pageObjects[i].img} onClick={this.pageObjects[i].oreClick} className="SceneObject"/>
-            );
-            this.pageReactComponents.push(
-                this.pageObjects[i].getReactComponent
-            );
+          luck  = Math.floor(Math.random() * 100) + 1;
+          if (luck > 100) {
+            luck = 100;
+          }
+          
+          ore = resourcesDictionary.findOreByRarity(luck);
+
+          this.state.activeOres.push({ 
+            name:       ore.name, 
+            hardness:   ore.hardness, 
+            img:        ore.img, 
+          })
        }
     }
+
+    handleClick = (index) => {
+        const updatedOres = this.state.activeOres;
+        updatedOres[index].hardness -= 1;
+        
+        if ( updatedOres[index].hardness <= 0 ) {
+            updatedOres.splice(index, 1);
+        }
+
+        this.setState( {activeOres:updatedOres} );
+        
+    }
+
+    render() {
+        return (
+          <div id="contentZone">
+            {this.state.activeOres.map((ore, index) => (
+              <Ore
+                key         = {uuidv4()}
+                index       = {index}
+                name        = {ore.name}
+                hardness    = {ore.hardness}
+                img         = {ore.img}
+                handleClick = {this.handleClick}
+              />
+            ))}
+          </div>
+        );
+      }
 }
 
 export default Mines;

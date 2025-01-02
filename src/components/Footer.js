@@ -17,7 +17,7 @@ function Footer() {
     return (
         <footer>
             <div id="footerBackground"></div>
-            <li id="footerList"> 
+            <li id="footerList">
                 <InventoryObject img={StoneOre} value="0"/>
                 <InventoryObject img={CoalOre} value="0"/>
                 <InventoryObject img={CopperOre} value="0"/>
